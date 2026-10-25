@@ -1,0 +1,726 @@
+/* =========================================
+   1. GLOBAL RESET
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg: #03030d;
+    --primary: #8b5cf6;
+    --secondary: #38bdf8;
+    --pink: #ec4899;
+    --text: #f5f3ff;
+    --muted: #a5a4c7;
+    --glass: rgba(13, 13, 39, 0.76);
+    --border: rgba(167, 139, 250, 0.38);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    isolation: isolate;
+
+    font-family: 'Inter', Arial, sans-serif;
+    color: var(--text);
+
+    padding: 50px 20px 70px;
+
+    background:
+        radial-gradient(
+            ellipse at 15% 20%,
+            rgba(76, 29, 149, 0.25),
+            transparent 38%
+        ),
+        radial-gradient(
+            ellipse at 85% 75%,
+            rgba(30, 64, 175, 0.22),
+            transparent 40%
+        ),
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(147, 51, 234, 0.18),
+            transparent 45%
+        ),
+        #03030d;
+}
+
+
+/* =========================================
+   2. ANIMATED GALAXY BACKGROUND
+========================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: -50%;
+
+    z-index: -2;
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 30% 35%,
+            rgba(124, 58, 237, 0.22),
+            transparent 18%
+        ),
+        radial-gradient(
+            ellipse at 70% 45%,
+            rgba(14, 165, 233, 0.17),
+            transparent 20%
+        ),
+        radial-gradient(
+            ellipse at 50% 70%,
+            rgba(236, 72, 153, 0.13),
+            transparent 22%
+        ),
+        radial-gradient(
+            ellipse at 20% 80%,
+            rgba(37, 99, 235, 0.17),
+            transparent 20%
+        );
+
+    filter: blur(30px);
+
+    animation: nebulaDrift 24s ease-in-out infinite alternate;
+}
+
+
+/* =========================================
+   3. TWINKLING STARS
+========================================= */
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    z-index: -1;
+    pointer-events: none;
+
+    background-image:
+        radial-gradient(2px 2px at 10% 15%, #ffffff 50%, transparent 100%),
+        radial-gradient(1px 1px at 25% 70%, #c4b5fd 50%, transparent 100%),
+        radial-gradient(2px 2px at 40% 30%, #ffffff 50%, transparent 100%),
+        radial-gradient(1px 1px at 65% 20%, #7dd3fc 50%, transparent 100%),
+        radial-gradient(2px 2px at 80% 65%, #ffffff 50%, transparent 100%),
+        radial-gradient(1px 1px at 90% 35%, #f0abfc 50%, transparent 100%),
+        radial-gradient(2px 2px at 55% 85%, #c4b5fd 50%, transparent 100%),
+        radial-gradient(1px 1px at 15% 90%, #7dd3fc 50%, transparent 100%),
+        radial-gradient(1px 1px at 72% 90%, #ffffff 50%, transparent 100%);
+
+    background-size:
+        280px 280px,
+        350px 350px,
+        420px 420px,
+        300px 300px,
+        380px 380px,
+        320px 320px,
+        450px 450px,
+        290px 290px,
+        360px 360px;
+
+    animation: starTwinkle 5s ease-in-out infinite alternate;
+}
+
+
+/* =========================================
+   4. MAIN HEADING
+========================================= */
+
+.main-heading {
+    max-width: 1000px;
+    margin: 0 auto 38px;
+
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        100deg,
+        #ffffff,
+        #c4b5fd,
+        #7dd3fc,
+        #f0abfc,
+        #ffffff
+    );
+
+    background-size: 300% auto;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(0 0 18px rgba(139, 92, 246, 0.35));
+
+    animation:
+        titleGlow 5s linear infinite,
+        fadeIn 1s ease-out both;
+}
+
+
+/* =========================================
+   5. GLASSMORPHISM CONTAINER
+========================================= */
+
+.container {
+    width: 100%;
+    max-width: 850px;
+    margin: 0 auto;
+
+    position: relative;
+    isolation: isolate;
+
+    padding: 35px;
+
+    background: var(--glass);
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    border: 1px solid var(--border);
+    border-radius: 24px;
+
+    box-shadow:
+        0 0 25px rgba(139, 92, 246, 0.12),
+        0 0 70px rgba(56, 189, 248, 0.06),
+        inset 0 0 30px rgba(139, 92, 246, 0.04);
+
+    animation: containerAppear 1s ease-out both;
+
+    transition:
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+
+/* Animated neon border */
+
+.container::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+
+    z-index: -1;
+    pointer-events: none;
+
+    border-radius: inherit;
+    padding: 1px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(139, 92, 246, 0.8),
+        rgba(56, 189, 248, 0.15),
+        rgba(236, 72, 153, 0.7),
+        rgba(139, 92, 246, 0.8)
+    );
+
+    background-size: 300% 300%;
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    animation: borderFlow 8s linear infinite;
+}
+
+.container:hover {
+    border-color: rgba(167, 139, 250, 0.65);
+
+    box-shadow:
+        0 0 35px rgba(139, 92, 246, 0.19),
+        0 0 90px rgba(56, 189, 248, 0.09),
+        inset 0 0 35px rgba(139, 92, 246, 0.06);
+}
+
+
+/* =========================================
+   6. SECTION HEADINGS
+========================================= */
+
+h2 {
+    margin-bottom: 18px;
+
+    color: #e9ddff;
+
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+
+    text-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+}
+
+
+/* =========================================
+   7. FORMS
+========================================= */
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    margin-bottom: 24px;
+}
+
+
+/* =========================================
+   8. TEXT INPUT AND TEXTAREA
+========================================= */
+
+input[type="text"],
+textarea {
+    width: 100%;
+
+    padding: 16px 18px;
+
+    color: #ffffff;
+    background: rgba(5, 5, 22, 0.78);
+
+    border: 1px solid rgba(139, 92, 246, 0.35);
+    border-radius: 12px;
+
+    font-family: inherit;
+    font-size: 15px;
+    line-height: 1.6;
+
+    outline: none;
+
+    transition:
+        border-color 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+input[type="text"] {
+    min-height: 56px;
+}
+
+textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #8584a8;
+    transition: color 0.3s ease;
+}
+
+
+/* Neon focus effect */
+
+input:focus,
+textarea:focus {
+    border-color: #a78bfa;
+
+    background: rgba(13, 13, 39, 0.95);
+
+    box-shadow:
+        0 0 0 3px rgba(139, 92, 246, 0.12),
+        0 0 22px rgba(139, 92, 246, 0.18);
+
+    transform: translateY(-1px);
+}
+
+input:focus::placeholder,
+textarea:focus::placeholder {
+    color: #bdb4e8;
+}
+
+
+/* =========================================
+   9. NEON BUTTONS
+========================================= */
+
+button {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+
+    align-self: flex-start;
+
+    padding: 13px 28px;
+
+    color: #ffffff;
+
+    background: linear-gradient(
+        110deg,
+        #6d5dfc,
+        #9333ea,
+        #c026d3
+    );
+
+    background-size: 200% 200%;
+
+    border: 1px solid rgba(216, 180, 254, 0.5);
+    border-radius: 12px;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 0 15px rgba(139, 92, 246, 0.24),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-position 0.4s ease;
+}
+
+
+/* Button light sweep */
+
+button::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    z-index: -1;
+
+    background: linear-gradient(
+        110deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.35) 50%,
+        transparent 80%
+    );
+
+    transform: translateX(-120%);
+
+    transition: transform 0.6s ease;
+}
+
+button:hover {
+    transform: translateY(-3px);
+
+    background-position: 100% 50%;
+
+    box-shadow:
+        0 0 22px rgba(139, 92, 246, 0.5),
+        0 0 45px rgba(56, 189, 248, 0.14);
+}
+
+button:hover::before {
+    transform: translateX(120%);
+}
+
+button:active {
+    transform: translateY(0) scale(0.98);
+}
+
+button:focus-visible {
+    outline: 2px solid #7dd3fc;
+    outline-offset: 4px;
+}
+
+
+/* =========================================
+   10. ANSWER AND SUMMARY PANELS
+========================================= */
+
+#answer,
+#summary {
+    min-height: 45px;
+
+    margin-top: 12px;
+    padding: 18px;
+
+    color: #dcd9f7;
+
+    background: linear-gradient(
+        120deg,
+        rgba(30, 27, 75, 0.55),
+        rgba(15, 23, 55, 0.65)
+    );
+
+    border: 1px solid rgba(139, 92, 246, 0.22);
+    border-left: 3px solid #8b5cf6;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+    line-height: 1.8;
+
+    overflow-wrap: anywhere;
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+#answer:empty,
+#summary:empty {
+    background: rgba(15, 15, 40, 0.35);
+}
+
+#answer:not(:empty),
+#summary:not(:empty) {
+    animation: resultAppear 0.5s ease-out both;
+
+    border-left-color: #38bdf8;
+
+    box-shadow: inset 0 0 18px rgba(56, 189, 248, 0.04);
+}
+
+
+/* =========================================
+   11. PROCESSING INDICATORS
+========================================= */
+
+.ask-loading,
+.summary-loading {
+    display: none;
+
+    align-items: center;
+    gap: 10px;
+
+    margin: 10px 0;
+
+    color: #c4b5fd;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/*
+When JavaScript adds the "active" class,
+the processing indicator becomes visible.
+*/
+
+.ask-loading.active,
+.summary-loading.active {
+    display: flex;
+}
+
+.ask-loading::before,
+.summary-loading::before {
+    content: "";
+
+    width: 16px;
+    height: 16px;
+
+    flex-shrink: 0;
+
+    border: 2px solid rgba(139, 92, 246, 0.25);
+    border-top-color: #c084fc;
+    border-right-color: #38bdf8;
+
+    border-radius: 50%;
+
+    animation: spinner 0.8s linear infinite;
+}
+
+
+/* =========================================
+   12. COSMIC DIVIDER
+========================================= */
+
+hr {
+    height: 1px;
+
+    margin: 35px 0;
+
+    border: none;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(139, 92, 246, 0.65),
+        rgba(56, 189, 248, 0.65),
+        rgba(236, 72, 153, 0.55),
+        transparent
+    );
+
+    box-shadow: 0 0 12px rgba(139, 92, 246, 0.18);
+}
+
+
+/* =========================================
+   13. ANIMATION KEYFRAMES
+========================================= */
+
+@keyframes nebulaDrift {
+    0% {
+        transform: translate(-2%, -1%) rotate(0deg) scale(1);
+    }
+
+    50% {
+        transform: translate(2%, 2%) rotate(4deg) scale(1.05);
+    }
+
+    100% {
+        transform: translate(-1%, 3%) rotate(-3deg) scale(1.1);
+    }
+}
+
+
+@keyframes starTwinkle {
+    0% {
+        opacity: 0.45;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.9;
+        transform: scale(1.015);
+    }
+
+    100% {
+        opacity: 0.55;
+        transform: scale(1);
+    }
+}
+
+
+@keyframes titleGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 300% 50%;
+    }
+}
+
+
+@keyframes borderFlow {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    100% {
+        background-position: 300% 50%;
+    }
+}
+
+
+@keyframes containerAppear {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes resultAppear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================
+   14. RESPONSIVE DESIGN
+========================================= */
+
+@media (max-width: 600px) {
+    body {
+        padding: 30px 14px;
+    }
+
+    .main-heading {
+        font-size: 2rem;
+        letter-spacing: -0.7px;
+
+        margin-bottom: 25px;
+    }
+
+    .container {
+        padding: 22px 18px;
+        border-radius: 18px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    input[type="text"],
+    textarea {
+        padding: 13px;
+        font-size: 14px;
+    }
+
+    textarea {
+        min-height: 130px;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+    }
+
+    hr {
+        margin: 25px 0;
+    }
+}
+
+
+/* =========================================
+   15. ACCESSIBILITY: REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
