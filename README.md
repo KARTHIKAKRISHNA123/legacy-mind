@@ -55,8 +55,6 @@ Legacy Mind is a deliberately small web app that exposes two purpose-built endpo
 
 The browser never sees the API key. All model calls are made server-side by Flask using the Groq Python SDK.
 
-> *Project history: this app was forked from [shradha-khapra/AI_Assistant_withFlask](https://github.com/shradha-khapra/AI_Assistant_withFlask) and its inference backend was swapped to Groq while keeping the UI intact.*
-
 ---
 
 ## Key Features
@@ -293,7 +291,6 @@ Groq/network exception → except Exception in ask() or summarize()
   → fetch handler throws → caught → message written into the panel
 ```
 
-> The detail is intentionally hidden from the UI, which is good for safety but means **the browser can never tell you why a call failed — read the terminal.** See [Troubleshooting](#troubleshooting--why-it-happens).
 
 ---
 
@@ -665,13 +662,7 @@ curl -X POST http://localhost:5000/summarize -F "email=Hi team, the review moves
 
 > `GET /ask?question=...` returns **405 Method Not Allowed** — only POST is registered.
 
-## Database Schema Overview
 
-None. The app is stateless and persists nothing.
-
-## Authentication Flow
-
-There is **no user authentication**. The only credential is the server-side Groq API key.
 
 ```mermaid
 sequenceDiagram
@@ -682,11 +673,7 @@ sequenceDiagram
   G-->>S: 200 completion or 401 invalid key
 ```
 
-> A `401` from Groq surfaces to the user only as the generic *"Unable to generate an answer"* message — the exact reason is in the terminal.
 
-## Backend Architecture
-
-A flat single-module Flask app: configuration and client construction at import time, then three view functions. There is no blueprint, service layer or ORM — appropriate at this size. The Groq client is created **once** at module level, so its underlying httpx connection pool is reused across requests.
 
 ## Frontend Architecture
 
@@ -717,11 +704,7 @@ Server-rendered template plus ~80 lines of vanilla JS. Two independent forms (`#
 - **Testing**: no automated tests exist.
 - **Docker / CI/CD**: no `Dockerfile` or pipeline config present.
 
-## Deployment Guide
 
-**Local (supported):** see [Installation Guide](#installation-guide).
-
-**Cloud (not yet configured in this repo):** any Python host works (Render, Railway, Fly.io, etc.). You would need to (1) run under a production server such as `gunicorn main:app` instead of `app.run(debug=True)`, and (2) set `GROQ_API_KEY` in the platform's environment settings rather than a committed file.
 
 ### As a git submodule (AIML Knowledge Base)
 
@@ -804,17 +787,7 @@ git submodule status          # no "-" prefix = healthy
 | Single-turn requests | Simple, stateless, horizontally scalable | No conversation memory |
 | Groq-hosted open model over a local model | Very fast inference, no GPU needed | Needs internet and an API key; subject to rate limits |
 
-## Roadmap (suggested)
 
-- [x] `requirements.txt` with pinned versions
-- [x] Complete `.gitignore` (`.venv/`, `__pycache__/`)
-- [ ] Return the exception *type* (not message) in the 500 JSON for easier diagnosis
-- [ ] Conversation history for Ask Anything
-- [ ] Streaming responses
-- [ ] Render Markdown answers safely (for example `marked` + `DOMPurify`) instead of showing raw `**` and `###`
-- [ ] Rate limiting and `MAX_CONTENT_LENGTH`
-- [ ] Production server config (`gunicorn`), Dockerfile, health-check route
-- [ ] Basic tests with Flask's test client and a mocked Groq client
 
 ## FAQ
 
@@ -832,6 +805,3 @@ git submodule status          # no "-" prefix = healthy
 2. Keep secrets out of commits — confirm `.env` is ignored
 3. Run the app locally and exercise both tools before opening a pull request
 
-## License
-
-No license file is present in this repository. Add one (for example MIT) before accepting contributions or redistributing.
