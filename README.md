@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧠 Legacy Mind
+# Legacy Mind
 
 ### A Flask AI personal assistant — ask anything, summarise any email — powered by Groq-hosted GPT-OSS 120B
 
@@ -14,7 +14,7 @@
 
 ---
 
-## 📸 Demo
+## Demo
 
 The interface is a single glassmorphism card over an animated galaxy background, with two tools: **Ask Anything** and **Summarise Email**.
 
@@ -38,15 +38,15 @@ Paste an email and get a 2–3 sentence summary that keeps the dates, decisions 
 
 ![Summarise Email — result](docs/images/demo-summarise-email.png)
 
-> ℹ️ *The model replies in Markdown (`**bold**`, `###` headings, tables), which the page currently shows as plain text because output is written with `innerText` for XSS safety. Safe Markdown rendering is listed in the Roadmap section below.*
+> *The model replies in Markdown (`**bold**`, `###` headings, tables), which the page currently shows as plain text because output is written with `innerText` for XSS safety. Safe Markdown rendering is listed in the Roadmap section below.*
 
 ---
 
-## 🎯 Problem Statement
+## Problem Statement
 
 Everyday assistant tasks — a quick factual question, or condensing a long email into the dates, decisions and action items that matter — normally mean switching between a chat app and a mail client, or pasting text into a general-purpose chatbot with no consistent behaviour.
 
-## 💡 Solution Overview
+## Solution Overview
 
 Legacy Mind is a deliberately small web app that exposes two purpose-built endpoints behind one page:
 
@@ -55,11 +55,11 @@ Legacy Mind is a deliberately small web app that exposes two purpose-built endpo
 
 The browser never sees the API key. All model calls are made server-side by Flask using the Groq Python SDK.
 
-> ℹ️ *Project history: this app was forked from [shradha-khapra/AI_Assistant_withFlask](https://github.com/shradha-khapra/AI_Assistant_withFlask) and its inference backend was swapped to Groq while keeping the UI intact.*
+> *Project history: this app was forked from [shradha-khapra/AI_Assistant_withFlask](https://github.com/shradha-khapra/AI_Assistant_withFlask) and its inference backend was swapped to Groq while keeping the UI intact.*
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 | Feature | Description | Where |
 |---|---|---|
@@ -73,7 +73,7 @@ The browser never sees the API key. All model calls are made server-side by Flas
 
 ---
 
-## 🏗️ Overall Architecture
+## Overall Architecture
 
 ```mermaid
 graph TD
@@ -100,7 +100,7 @@ graph TD
   OA_Browser -->|"HTTPS font request"| OA_Fonts
 ```
 
-## 🧩 System Architecture
+## System Architecture
 
 ```mermaid
 flowchart LR
@@ -131,9 +131,9 @@ flowchart LR
 
 ---
 
-## 🧰 Technology Stack — Complete Breakdown
+## Technology Stack — Complete Breakdown
 
-> Every package found in the project's virtual environment, plus the external services it talks to. There is **no** `requirements.txt` in the repo (see [Documentation Gaps](#-known-gaps-and-recommended-improvements)); versions below are read from the installed `.venv` dist-info.
+> Every package found in the project's virtual environment, plus the external services it talks to. Direct dependencies are pinned in `requirements.txt`; versions below are read from the installed `.venv` dist-info.
 
 ### Direct dependencies (imported by `main.py`)
 
@@ -168,7 +168,7 @@ flowchart LR
 
 ---
 
-## 🔄 Request Lifecycle
+## Request Lifecycle
 
 ### 1. Read — loading the page (`GET /`)
 
@@ -248,7 +248,7 @@ Identical to `/ask` with these differences: form field `email`, handler `summari
 
 ---
 
-## 🌊 Data Flow
+## Data Flow
 
 ### Component interaction
 
@@ -293,12 +293,12 @@ Groq/network exception → except Exception in ask() or summarize()
   → fetch handler throws → caught → message written into the panel
 ```
 
-> The detail is intentionally hidden from the UI, which is good for safety but means **the browser can never tell you why a call failed — read the terminal.** See [Troubleshooting](#-troubleshooting--why-it-happens).
+> The detail is intentionally hidden from the UI, which is good for safety but means **the browser can never tell you why a call failed — read the terminal.** See [Troubleshooting](#troubleshooting--why-it-happens).
 
 ---
 
 <details>
-<summary>📐 UML Diagrams — Full Suite (9 Diagrams + Swimlane)</summary>
+<summary> UML Diagrams — Full Suite (9 Diagrams + Swimlane)</summary>
 
 ### UML 1 — Use Case Diagram
 
@@ -518,7 +518,7 @@ graph TB
 </details>
 
 <details>
-<summary>📊 Data Flow Diagrams (L0 + L1)</summary>
+<summary> Data Flow Diagrams (L0 + L1)</summary>
 
 ### DFD Level 0 — Context
 
@@ -566,7 +566,7 @@ flowchart LR
 
 ---
 
-## 📁 Folder Structure
+## Folder Structure
 
 ```
 legacy-mind/
@@ -578,22 +578,21 @@ legacy-mind/
 ├── docs/
 │   └── images/          # README screenshots
 ├── .env                 # GROQ_API_KEY (git-ignored — never commit)
-├── .gitignore           # Currently contains only: .env
+├── .gitignore           # Ignores .env, .venv/, __pycache__/, *.pyc
+├── requirements.txt     # Pinned: Flask, groq, python-dotenv
 ├── .venv/               # uv-managed virtualenv (Python 3.14.6)
 └── __pycache__/         # Bytecode cache
 ```
 
-> ⚠️ `.gitignore` currently lists only `.env`. Add `.venv/` and `__pycache__/` before running `git add .`, or the whole virtualenv will be committed.
-
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 - Python 3.10+ (developed on 3.14.6)
 - A free API key from [console.groq.com](https://console.groq.com) → **API Keys**
 - Git (only if you are cloning)
 
-## 🚀 Installation Guide
+## Installation Guide
 
 ```bash
 # 1. Clone (or add as a submodule, see below)
@@ -606,7 +605,7 @@ source .venv/Scripts/activate        # Git Bash on Windows
 # .venv\Scripts\Activate.ps1         # PowerShell
 
 # 3. Install dependencies
-pip install flask groq python-dotenv # or: uv pip install flask groq python-dotenv
+pip install -r requirements.txt      # or: uv pip install -r requirements.txt
 
 # 4. Create .env  (see next section for the exact format)
 echo 'GROQ_API_KEY=your_key_here' > .env
@@ -617,24 +616,24 @@ flask --app main run                 # or: python main.py
 
 Open **http://localhost:5000**.
 
-## 🔐 Environment Variables
+## Environment Variables
 
 | Variable | Required | Example | Description |
 |---|---|---|---|
-| `GROQ_API_KEY` | ✅ | `gsk_xxxxxxxx...` (56 characters) | Groq API key. Missing or unparseable → app raises `ValueError` at import and will not start. |
+| `GROQ_API_KEY` |  | `gsk_xxxxxxxx...` (56 characters) | Groq API key. Missing or unparseable → app raises `ValueError` at import and will not start. |
 
 **`.env` format rules** — this file is parsed by python-dotenv, not a shell:
 
 ```ini
-# ✅ valid
+# valid
 GROQ_API_KEY=gsk_your_key_here
 GROQ_API_KEY="gsk_your_key_here"
 
-# ❌ invalid — anything after the closing quote makes the whole line unparseable
+# invalid — anything after the closing quote makes the whole line unparseable
 GROQ_API_KEY="gsk_your_key_here"oops
 ```
 
-## ⚙️ Configuration Guide
+## Configuration Guide
 
 Tunable constants live directly in `main.py`:
 
@@ -649,7 +648,7 @@ Tunable constants live directly in `main.py`:
 
 ---
 
-## 🔌 API Documentation
+## API Documentation
 
 Both POST endpoints accept **form data** (`multipart/form-data` from `FormData`, or `application/x-www-form-urlencoded`), not JSON.
 
@@ -666,11 +665,11 @@ curl -X POST http://localhost:5000/summarize -F "email=Hi team, the review moves
 
 > `GET /ask?question=...` returns **405 Method Not Allowed** — only POST is registered.
 
-## 🗄️ Database Schema Overview
+## Database Schema Overview
 
 None. The app is stateless and persists nothing.
 
-## 🔑 Authentication Flow
+## Authentication Flow
 
 There is **no user authentication**. The only credential is the server-side Groq API key.
 
@@ -685,30 +684,30 @@ sequenceDiagram
 
 > A `401` from Groq surfaces to the user only as the generic *"Unable to generate an answer"* message — the exact reason is in the terminal.
 
-## 🧱 Backend Architecture
+## Backend Architecture
 
 A flat single-module Flask app: configuration and client construction at import time, then three view functions. There is no blueprint, service layer or ORM — appropriate at this size. The Groq client is created **once** at module level, so its underlying httpx connection pool is reused across requests.
 
-## 🖥️ Frontend Architecture
+## Frontend Architecture
 
 Server-rendered template plus ~80 lines of vanilla JS. Two independent forms (`#askForm`, `#emailForm`) each get an `onsubmit` handler that calls `preventDefault()`, posts `FormData` with `fetch`, toggles a loading element, and writes the result with `innerText`. No bundler, framework or state library.
 
 ---
 
-## 🛡️ Security Considerations
+## Security Considerations
 
 | Area | Current state | Risk / note |
 |---|---|---|
-| API key storage | `.env`, git-ignored | ✅ Never sent to the browser |
-| Output rendering | `innerText` | ✅ Model output cannot inject HTML or script |
-| Endpoint access control | None | ⚠️ Anyone who can reach the server can spend your Groq quota |
-| Rate limiting | None | ⚠️ Add Flask-Limiter before exposing publicly |
-| Input size limit | None | ⚠️ A very large email can exceed the model's context or burn tokens; set `MAX_CONTENT_LENGTH` |
-| `debug=True` | Enabled | ⚠️ Werkzeug debugger allows code execution — **never** expose it beyond localhost |
+| API key storage | `.env`, git-ignored | OK: never sent to the browser |
+| Output rendering | `innerText` | OK: model output cannot inject HTML or script |
+| Endpoint access control | None | Risk: Anyone who can reach the server can spend your Groq quota |
+| Rate limiting | None | Risk: Add Flask-Limiter before exposing publicly |
+| Input size limit | None | Risk: A very large email can exceed the model's context or burn tokens; set `MAX_CONTENT_LENGTH` |
+| `debug=True` | Enabled | Risk: Werkzeug debugger allows code execution — **never** expose it beyond localhost |
 | Prompt injection | Summariser processes untrusted email text | Low impact (no tools or data access), but a malicious email can bend the summary |
-| `.gitignore` | Only `.env` | ⚠️ `.venv/` and `__pycache__/` are not ignored |
+| `.gitignore` | Ignores `.env`, `.venv/`, `__pycache__/`, `*.pyc` | OK: secrets and the virtualenv stay out of git |
 
-## ⚡ Performance, Scalability and Operations
+## Performance, Scalability and Operations
 
 - **Latency** is dominated by the Groq call; the app does no other heavy work.
 - **Output cap** of 512 tokens bounds both latency and cost.
@@ -718,11 +717,11 @@ Server-rendered template plus ~80 lines of vanilla JS. Two independent forms (`#
 - **Testing**: no automated tests exist.
 - **Docker / CI/CD**: no `Dockerfile` or pipeline config present.
 
-## ☁️ Deployment Guide
+## Deployment Guide
 
-**Local (supported):** see [Installation Guide](#-installation-guide).
+**Local (supported):** see [Installation Guide](#installation-guide).
 
-**Cloud (not yet configured in this repo):** any Python host works (Render, Railway, Fly.io, etc.). You would need to (1) add a `requirements.txt`, (2) run under a production server such as `gunicorn main:app` instead of `app.run(debug=True)`, and (3) set `GROQ_API_KEY` in the platform's environment settings rather than a committed file.
+**Cloud (not yet configured in this repo):** any Python host works (Render, Railway, Fly.io, etc.). You would need to (1) run under a production server such as `gunicorn main:app` instead of `app.run(debug=True)`, and (2) set `GROQ_API_KEY` in the platform's environment settings rather than a committed file.
 
 ### As a git submodule (AIML Knowledge Base)
 
@@ -734,7 +733,7 @@ git submodule status          # no "-" prefix = healthy
 
 ---
 
-## 🛠️ Troubleshooting — Why It Happens
+## Troubleshooting — Why It Happens
 
 ### 1. `ValueError: GROQ_API_KEY is missing from the .env file`
 
@@ -793,7 +792,7 @@ git submodule status          # no "-" prefix = healthy
 
 ---
 
-## 🧭 Engineering Decisions and Tradeoffs
+## Engineering Decisions and Tradeoffs
 
 | Decision | Why | Tradeoff |
 |---|---|---|
@@ -805,10 +804,10 @@ git submodule status          # no "-" prefix = healthy
 | Single-turn requests | Simple, stateless, horizontally scalable | No conversation memory |
 | Groq-hosted open model over a local model | Very fast inference, no GPU needed | Needs internet and an API key; subject to rate limits |
 
-## 🗺️ Roadmap (suggested)
+## Roadmap (suggested)
 
-- [ ] `requirements.txt` with pinned versions
-- [ ] Complete `.gitignore` (`.venv/`, `__pycache__/`)
+- [x] `requirements.txt` with pinned versions
+- [x] Complete `.gitignore` (`.venv/`, `__pycache__/`)
 - [ ] Return the exception *type* (not message) in the 500 JSON for easier diagnosis
 - [ ] Conversation history for Ask Anything
 - [ ] Streaming responses
@@ -817,7 +816,7 @@ git submodule status          # no "-" prefix = healthy
 - [ ] Production server config (`gunicorn`), Dockerfile, health-check route
 - [ ] Basic tests with Flask's test client and a mocked Groq client
 
-## ❓ FAQ
+## FAQ
 
 **Is this Grok or Groq?** Groq (groq.com) — an inference provider that hosts open models such as Llama and GPT-OSS. Grok is xAI's separate model and API; this project does not use it.
 
@@ -827,17 +826,12 @@ git submodule status          # no "-" prefix = healthy
 
 **Can I change the model?** Yes — edit `MODEL` in `main.py` to any chat model id available on your Groq account.
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork and create a branch: `git checkout -b feature/your-change`
 2. Keep secrets out of commits — confirm `.env` is ignored
 3. Run the app locally and exercise both tools before opening a pull request
 
-## 📄 License
+## License
 
 No license file is present in this repository. Add one (for example MIT) before accepting contributions or redistributing.
-
-## 🙏 Credits
-
-- Original project: [shradha-khapra/AI_Assistant_withFlask](https://github.com/shradha-khapra/AI_Assistant_withFlask)
-- [Flask](https://flask.palletsprojects.com), [Groq](https://groq.com), [python-dotenv](https://github.com/theskumar/python-dotenv), [OpenAI GPT-OSS](https://openai.com/index/introducing-gpt-oss/), [Inter](https://rsms.me/inter/) typeface
